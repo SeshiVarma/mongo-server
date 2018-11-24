@@ -1,0 +1,19 @@
+- name: RHEL | Add mongo repository
+  yum_repository:
+    baseurl: https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/{{ mongodb_version }}/{{ ansible_architecture }}/
+    description: MongoDB Repository
+    name: mongodb-org-{{ mongodb_version }}
+    file: mongodb
+    enabled: yes
+    gpgkey: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
+  tags:
+    - mongodb_yum
+    - mongodb_yum_repo
+
+- name: RHEL | Install MongoDB
+  yum:
+    name: "{{ mongodb_packages }}"
+    state: present
+  tags:
+    - mongodb_yum
+
